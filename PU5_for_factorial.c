@@ -50,12 +50,15 @@ int main()
     char my_val[VAL_DEF_SIZE];
     memset(my_val, 0, VAL_DEF_SIZE);
     my_val[0] = 1;
-    int i = 2;
     char last_res;
 
-    while (i <= d && (last_res = add_fact(my_val, i++)))
-        ;
-    
+    for (int i = 2; i <= d; i++)
+    {
+        last_res = add_fact(my_val, i);
+        if (!last_res)
+            break;
+    }
+
     if (!last_res && d > 0)
     {
         printf("Choosen data type too small!\n");
