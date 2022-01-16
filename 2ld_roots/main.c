@@ -10,11 +10,10 @@ float my_func(float x)
 
 int main()
 {
-    float l, r, c;
+    float l, r;
     float val;
     float prec;
     float tmp;
-    int i;
 
     printf("Please enter left and right border of search area: ");
     scanf("%f %f", &l, &r);
@@ -27,23 +26,23 @@ int main()
 
     float eps = prec / 100.0f;
 
-    for (i = 0; i < MAX_INTER_COUNT; i++)
-    {
-        c = (l + r) / 2.0f;
-        tmp = my_func(c);
-        if (fabs(tmp - val) <= prec)
-            break;
+    float res_x = l;
+    float res_val = my_func(l);
 
-        if (tmp > val)
-            r = c + eps;
-        else
-            l = c - eps;
+    while (l < r)
+    {
+        tmp = my_func(l);
+        if (fabs(tmp - val) <= fabs(val - res_val))
+        {
+            res_val = tmp;
+            res_x = l;
+        }
+
+        l += prec;
     }
     printf("\n");
-    if (i < MAX_INTER_COUNT)
-        printf("Values with given precision was found at: %.4f\nItterations before result: %d\nFound value: %.4f\nGiven value: %.4f\nError: %.4f\n", c, i + 1, tmp, val, fabs(tmp - val));
-    else
-        printf("Given values was not found with given precision\n");
+
+    printf("Closes value found: %.2f at %.2f\nError: %.2f\n", res_val, res_x, fabs(val - res_val));
 
     return 0;
 }
